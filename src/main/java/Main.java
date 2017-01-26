@@ -2,9 +2,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import model.emotes.EmotesContainer;
-import model.emotes.JsonEmotion;
-import model.emotes.TwitchEmotesContainer;
-import model.emotes.TwitchEmotesLoader;
+import model.emotes.twitch.TwitchJsonEmotion;
+import model.emotes.twitch.TwitchEmotesContainer;
+import model.emotes.twitch.TwitchEmotesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.JsonPropertiesReader;
@@ -46,9 +46,10 @@ public class Main {
 
 		Gson gson = new Gson();
 		//TODO put this in method or class
+		//TODO add this https://api.betterttv.net/emotes
 		EmotesContainer emotes = TwitchEmotesContainer.setInstance(arr.size());
 		for (int i = 0; i < arr.size(); i++) {
-			JsonEmotion emotion = gson.fromJson(arr.get(i), JsonEmotion.class);
+			TwitchJsonEmotion emotion = gson.fromJson(arr.get(i), TwitchJsonEmotion.class);
 			emotes.getMap().put(emotion.getRegex(), emotion.getImages().get(0).getUrl());
 		}
 		logger.info("Got " + emotes.getMap().size() + " emotions in base. Must be equal to " + arr.size());

@@ -1,6 +1,7 @@
-package model.emotes;
+package model.emotes.twitch;
 
 import com.google.gson.JsonObject;
+import model.emotes.EmotesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.JsonLoader;

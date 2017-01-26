@@ -1,7 +1,7 @@
 package model.messages;
 
 import model.emotes.EmotesContainer;
-import model.emotes.TwitchEmotesContainer;
+import model.emotes.twitch.TwitchEmotesContainer;
 
 /*
 Example: :xail24!xail24@xail24.tmi.twitch.tv PRIVMSG #pgg :erik_kartmen1 не просто голоса похожие

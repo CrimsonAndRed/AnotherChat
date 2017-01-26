@@ -1,5 +1,6 @@
-package model.emotes;
+package model.emotes.twitch;
 
+import model.emotes.EmotesContainer;
 import model.messages.Origins;
 
 import java.util.HashMap;
