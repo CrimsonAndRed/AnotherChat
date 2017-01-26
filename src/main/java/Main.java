@@ -15,6 +15,7 @@ import java.util.InputMismatchException;
 public class Main {
 	private static final Logger logger = LogManager.getLogger();
 	//TODO human-usable login interface
+	//TODO json -> preferences or .properties
 	/*
 		To run this:
 		1. Rename "settingsStub.json" to "settings.json"
