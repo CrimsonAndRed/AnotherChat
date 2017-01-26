@@ -14,6 +14,11 @@ import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.concurrent.TimeUnit;
 
+/*
+curl -H 'Accept: application/vnd.twitchtv.v5+json' \
+-H 'Client-ID: uo6dggojyb8d6soh92zknwmi5ej1q2' \
+-X GET 'https://api.twitch.tv/kraken/chat/emoticons'
+ */
 public class TwitchEmotesLoader implements EmotesLoader {
 
 	private static final Logger logger = LogManager.getLogger();
@@ -54,6 +59,7 @@ public class TwitchEmotesLoader implements EmotesLoader {
 		try {
 			stream = new CustomUrlBuilder(new URL(url))
 					.setAttribute("Accept", "application/vnd.twitchtv.v5+json")
+					//TODO remove hardcoded client-id
 					.setAttribute("Client-ID", "mhxmew00o9rho407thdtweysipi7q2")
 					.getStream();
 		} catch (IOException e) {
