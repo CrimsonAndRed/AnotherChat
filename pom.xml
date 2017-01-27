@@ -40,7 +40,8 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.5.0</version>
                 <configuration>
-                    <mainClass>Main</mainClass>
+                    <!--<mainClass>Main</mainClass>-->
+                    <mainClass>AnotherChat</mainClass>
                 </configuration>
             </plugin>
             <plugin>
