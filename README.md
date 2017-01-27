@@ -1,2 +1,2 @@
 #AnotherChat
-Just another Twitch chat
+Just another Twitch/whatever chat
