@@ -16,6 +16,6 @@ public class BetterTvJsonEmotion {
 	}
 
 	public String getUrl() {
-		return url;
+		return "https:" + url;
 	}
 }
