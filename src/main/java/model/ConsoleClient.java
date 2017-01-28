@@ -52,7 +52,7 @@ public class ConsoleClient extends Thread {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception: " + e);
+			e.printStackTrace();
 		}
 	}
 }
