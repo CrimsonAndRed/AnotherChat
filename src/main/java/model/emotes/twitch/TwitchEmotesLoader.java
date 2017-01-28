@@ -18,8 +18,6 @@ public class TwitchEmotesLoader extends EmotesLoader {
 	protected InputStreamReader getStream() throws IOException{
 		return new CustomUrlBuilder(new URL(getUrl()))
 				.setAttribute("Accept", "application/vnd.twitchtv.v5+json")
-				//TODO remove hardcoded client-id
-				.setAttribute("Client-ID", "mhxmew00o9rho407thdtweysipi7q2")
 				.getStream();
 	}
 
