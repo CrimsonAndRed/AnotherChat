@@ -46,7 +46,9 @@ public class IrcClient {
 				e.printStackTrace();
 			}
 
-			//TODO quitting without PART channels might produce NPE
+			//TODO quitting without PART channels might produce NPE under high workload
+			//bwriter.close();
+			//breader.close();
 			socket.shutdownInput();
 			socket.shutdownOutput();
 
