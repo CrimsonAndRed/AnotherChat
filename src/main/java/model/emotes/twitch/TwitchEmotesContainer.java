@@ -49,4 +49,5 @@ public class TwitchEmotesContainer implements EmotesContainer {
 	public Map<String, String> getMap() {
 		return map;
 	}
+
 }
