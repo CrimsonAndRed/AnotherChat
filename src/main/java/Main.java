@@ -1,6 +1,9 @@
+import model.ChannelsPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.ConsoleWriter;
+
+import java.io.IOException;
 
 public class Main {
 	private static final Logger logger = LogManager.getLogger();
@@ -23,6 +26,13 @@ public class Main {
 		try {
 			inp.join();
 		} catch (InterruptedException e) {
+			logger.error(e);
+		}
+		logger.info("Shutting down");
+		try {
+			ChannelsPool.clear();
+			logger.info("All channels terminated");
+		} catch (IOException e) {
 			logger.error(e);
 		}
 	}
