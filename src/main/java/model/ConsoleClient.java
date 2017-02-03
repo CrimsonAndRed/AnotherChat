@@ -6,8 +6,8 @@ import model.responses.Checker;
 import model.responses.ResponseType;
 import model.responses.TwitchChecker;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.*;
+import java.net.Socket;
 
 import static web.StringSender.sendString;
 
@@ -15,8 +15,10 @@ public class ConsoleClient extends Thread {
 
 	private BufferedReader br;
 	private BufferedWriter bw;
+	private Socket socket;
 
-	public ConsoleClient(BufferedReader br, BufferedWriter bw) {
+	public ConsoleClient(Socket socket, BufferedWriter bw, BufferedReader br) {
+		this.socket = socket;
 		this.br = br;
 		this.bw = bw;
 	}
@@ -54,5 +56,10 @@ public class ConsoleClient extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void terminate() throws IOException {
+		socket.shutdownInput();
+		socket.shutdownOutput();
 	}
 }
