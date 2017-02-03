@@ -48,9 +48,6 @@ public class TwitchStarter implements Starter {
 		logger.info("Got properties");
 		loadEmotes();
 
-		//return new IrcClient(ADDRESS, PORT, name, oauth);
-
-
 		try {
 			socket = new Socket(ADDRESS, PORT);
 			bwriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -61,12 +58,11 @@ public class TwitchStarter implements Starter {
 		}
 		tryAuthenticate();
 		sendString(bwriter, "JOIN #" + channelName);
-		//Yes it is threadsafe
 		//TODO maybe sort of resolve, this is stupid
 		return new ConsoleClient(socket, bwriter, breader);
 	}
 
-	private void loadEmotes() {
+	private void loadEmotes() throws FileSystemException {
 
 		logger.info("Getting twitch emotes");
 

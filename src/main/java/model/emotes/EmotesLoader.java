@@ -1,6 +1,7 @@
 package model.emotes;
 
 import com.google.gson.JsonObject;
+import model.exceptions.FileSystemException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.JsonLoader;
@@ -16,7 +17,7 @@ public abstract class EmotesLoader {
 
 	private static final Logger logger = LogManager.getLogger();
 
-	public JsonObject getEmotesAndSave(String filepath) {
+	public JsonObject getEmotesAndSave(String filepath) throws FileSystemException{
 		File file = new File(filepath);
 		JsonLoader loader = new JsonLoader();
 		if (file.exists()) {
@@ -30,10 +31,10 @@ public abstract class EmotesLoader {
 					logger.info("Keeping cached file");
 					return loader.getJsonFromStream(new InputStreamReader(new FileInputStream(file)));
 				}
-			} catch (IOException e) {
+			} catch (IOException | FileSystemException e) {
 				final String errorMsg = "Cant read modification date of file " + file.getAbsolutePath();
 				logger.error(errorMsg);
-				throw new InputMismatchException(errorMsg);
+				throw new FileSystemException(errorMsg);
 			}
 		} else {
 			logger.info("File " + filepath + " does not exist");
@@ -57,8 +58,14 @@ public abstract class EmotesLoader {
 		}
 	}
 
-	public long checkEmotes(String filepath) throws IOException {
-		return TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis()) - Files.getLastModifiedTime(Paths.get(filepath)).to(TimeUnit.DAYS);
+	public long checkEmotes(String filepath) throws FileSystemException {
+		long time = 0;
+		try {
+			time = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis()) - Files.getLastModifiedTime(Paths.get(filepath)).to(TimeUnit.DAYS);
+		} catch (IOException e) {
+			throw new FileSystemException();
+		}
+		return time;
 	}
 
 	public JsonObject getEmotes() {

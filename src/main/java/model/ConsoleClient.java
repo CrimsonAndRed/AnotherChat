@@ -1,10 +1,13 @@
 package model;
 
+import model.exceptions.InternetException;
 import model.messages.TwitchUserMessage;
 import model.messages.UserMessage;
 import model.responses.Checker;
 import model.responses.ResponseType;
 import model.responses.TwitchChecker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,9 +16,13 @@ import static web.StringSender.sendString;
 
 public class ConsoleClient extends Thread {
 
+	private static final Logger logger = LogManager.getLogger();
+
 	private BufferedReader br;
 	private BufferedWriter bw;
 	private Socket socket;
+	//TODO how about DI?
+	Checker checker = new TwitchChecker();
 
 	public ConsoleClient(Socket socket, BufferedWriter bw, BufferedReader br) {
 		this.socket = socket;
@@ -26,8 +33,6 @@ public class ConsoleClient extends Thread {
 	@Override
 	public void run() {
 		try {
-			//TODO how about DI?
-			Checker checker = new TwitchChecker();
 			ResponseType type = null;
 			String line = null;
 			while ((line = br.readLine()) != null) {
@@ -38,7 +43,7 @@ public class ConsoleClient extends Thread {
 						UserMessage message = new TwitchUserMessage(line);
 						System.out.println("Sender " + message.getSender()
 								+ " in channel " + message.getChannel()
-								+ " said: " + message.getMessage());
+								+ " said:" + message.getMessage());
 						break;
 					case PING:
 						sendString(bw, "PONG :tmi.twitch.tv");
@@ -53,8 +58,14 @@ public class ConsoleClient extends Thread {
 						break;
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (InternetException | IOException e) {
+			logger.error("Internet seems to be down. Trying to reconnect..");
+			try {
+				Thread.sleep(3000L);
+			} catch (InterruptedException e1) {
+				logger.error(e1);
+			}
+
 		}
 	}
 
