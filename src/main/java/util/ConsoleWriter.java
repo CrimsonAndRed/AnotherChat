@@ -24,8 +24,8 @@ public class ConsoleWriter implements Runnable {
 				break;
 			}
 			checkInput(string);
-			//sendString(br, string);
 		}
+		sc.close();
 	}
 
 	private void checkInput(String string) {
@@ -37,15 +37,18 @@ public class ConsoleWriter implements Runnable {
 				c1 = starter.prepareConnection(name);
 				ChannelsPool.put(name, c1);
 				c1.start();
+				logger.info("Started connection to " + name);
 			} catch (InternetException e) {
 				e.printStackTrace();
 			} catch (FileSystemException e) {
 				logger.error(e);
+			} catch (IllegalArgumentException e) {
+				logger.warn(e.getMessage());
 			}
 
 		} else if (string.startsWith("part ")) {
 			String name = string.substring(5);
-			ConsoleClient consoleClient = ChannelsPool.get(name);
+			ConsoleClient consoleClient = ChannelsPool.remove(name);
 			if (consoleClient == null) {
 				logger.warn("Channel " + name + " does not exist");
 			} else {
