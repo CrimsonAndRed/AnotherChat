@@ -32,6 +32,7 @@ public class ChannelsPool {
 	}
 
 	public static void clear() throws IOException{
+		logger.info("Totally there are " + channelsPool.size() + " channels up. Trying to close them");
 		for (Map.Entry<String, ConsoleClient> entry : channelsPool.entrySet()) {
 			entry.getValue().terminate();
 		}
