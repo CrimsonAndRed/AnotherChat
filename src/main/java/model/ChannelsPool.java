@@ -1,5 +1,6 @@
 package model;
 
+import model.clients.ConsoleClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

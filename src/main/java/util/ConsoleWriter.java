@@ -1,7 +1,7 @@
 package util;
 
 import model.ChannelsPool;
-import model.ConsoleClient;
+import model.clients.ConsoleClient;
 import model.exceptions.FileSystemException;
 import model.exceptions.InternetException;
 import model.starters.TwitchStarter;
@@ -29,10 +29,10 @@ public class ConsoleWriter implements Runnable {
 	}
 
 	private void checkInput(String string) {
-		if (string.startsWith("join ")) {
+		if (string.startsWith("twitch join ")) {
 			TwitchStarter starter = new TwitchStarter();
 			ConsoleClient c1 = null;
-			String name = string.substring(5);
+			String name = string.substring(string.lastIndexOf(' ')+1);
 			try {
 				c1 = starter.prepareConnection(name);
 				ChannelsPool.put(name, c1);
@@ -46,8 +46,8 @@ public class ConsoleWriter implements Runnable {
 				logger.warn(e.getMessage());
 			}
 
-		} else if (string.startsWith("part ")) {
-			String name = string.substring(5);
+		} else if (string.startsWith("twitch part ")) {
+			String name = string.substring(string.lastIndexOf(' ')+1);
 			ConsoleClient consoleClient = ChannelsPool.remove(name);
 			if (consoleClient == null) {
 				logger.warn("Channel " + name + " does not exist");

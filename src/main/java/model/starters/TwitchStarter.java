@@ -3,11 +3,12 @@ package model.starters;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import model.ConsoleClient;
-import model.exceptions.FileSystemException;
-import model.exceptions.InternetException;
+import model.clients.ConsoleClient;
+import model.clients.TwitchConsoleClient;
 import model.emotes.EmotesContainer;
 import model.emotes.twitch.*;
+import model.exceptions.FileSystemException;
+import model.exceptions.InternetException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.JsonPropertiesReader;
@@ -59,7 +60,7 @@ public class TwitchStarter implements Starter {
 		tryAuthenticate();
 		sendString(bwriter, "JOIN #" + channelName);
 		//TODO maybe sort of resolve, this is stupid
-		return new ConsoleClient(socket, bwriter, breader);
+		return new TwitchConsoleClient(socket, bwriter, breader);
 	}
 
 	private void loadEmotes() throws FileSystemException {

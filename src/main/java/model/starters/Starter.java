@@ -1,6 +1,6 @@
 package model.starters;
 
-import model.ConsoleClient;
+import model.clients.ConsoleClient;
 import model.exceptions.FileSystemException;
 import model.exceptions.InternetException;
 
