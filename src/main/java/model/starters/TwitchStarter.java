@@ -31,11 +31,11 @@ public class TwitchStarter implements Starter {
 	}
 
 	private Socket socket;
-	public BufferedWriter bwriter;
-	public BufferedReader breader;
+	private BufferedWriter bwriter;
+	private BufferedReader breader;
 
 	@Override
-	public synchronized ConsoleClient prepareConnection(String channelName) throws InternetException, FileSystemException {
+	public ConsoleClient prepareConnection(String channelName) throws InternetException, FileSystemException {
 		JsonPropertiesReader settingsReader = null;
 		try {
 			settingsReader = new JsonPropertiesReader("settings.json");
@@ -103,6 +103,8 @@ public class TwitchStarter implements Starter {
 			logger.info("Twitch emotes are already loaded");
 		}
 		logger.info("Starting IRC connection...");
+		//TODO this is questionable
+		System.gc();
 	}
 
 	private void tryAuthenticate() throws InternetException {
@@ -118,7 +120,7 @@ public class TwitchStarter implements Starter {
 				logger.info("System responded:\n" + string);
 				throw new InternetException();
 			}
-			// 7 messages as twitch irc respond
+			// 7 messages as twitch irc response
 			logger.debug(string);
 			logger.debug(breader.readLine());
 			logger.debug(breader.readLine());
