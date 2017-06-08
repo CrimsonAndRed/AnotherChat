@@ -200,6 +200,7 @@ public class TwitchStarter implements Starter {
             logger.error(e);
             throw new InternetException();
         }
+        SecretsPool.setSecret(Origin.TWITCHTV, Pair.of(name, oauth));
     }
 
     private String getCodeFromWeb() throws IOException {
