@@ -2,7 +2,6 @@ package model.clients;
 
 import model.exceptions.InternetException;
 import model.messages.TwitchUserMessage;
-import model.messages.UserMessage;
 import model.responses.Checker;
 import model.responses.ResponseType;
 import model.responses.TwitchChecker;
@@ -29,27 +28,17 @@ public class TwitchConsoleClient extends ConsoleClient {
 	}
 
 	@Override
-	protected void parseInput(String line) throws InternetException {
+	protected void simpleParseInput(String line) throws InternetException {
 		ResponseType type = null;
 		type = checker.checkType(line);
-		switch (type) {
-			case MSG:
-				UserMessage message = new TwitchUserMessage(line);
-				System.out.println("Sender " + message.getSender()
-						+ " in channel " + message.getChannel()
-						+ " said:" + message.getMessage());
-				break;
-			case PING:
-				sendString(bw, "PONG :tmi.twitch.tv");
-				break;
-			case SYSMSG:
-				System.out.println("System said:\n" + line);
-				break;
-			case UNKNOWN:
-				System.out.println("Unknown message:\n" + line);
-				break;
-			default:
-				break;
+
+		if (type == ResponseType.PING) {
+			//TODO This is synchronous!!
+			logger.debug("Received PONG twitch message");
+			sendString(bw, "PONG :tmi.twitch.tv");
+			logger.debug("Answered PING to twitch server");
+		} else {
+			writer.queueMessage(new TwitchUserMessage(type, line));
 		}
 	}
 }

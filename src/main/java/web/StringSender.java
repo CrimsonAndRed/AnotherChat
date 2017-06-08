@@ -10,7 +10,7 @@ public class StringSender {
 		try {
 			bw.write(str + "\r\n");
 			bw.flush();
-			System.out.println("<<< " + str);
+			//System.out.println("<<< " + str);
 		} catch (IOException e) {
 			throw new InternetException();
 		}

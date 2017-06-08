@@ -1,7 +1,7 @@
 package model.emotes.twitch;
 
 import model.emotes.EmotesContainer;
-import model.messages.Origins;
+import model.Origin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Map;
 public class TwitchEmotesContainer implements EmotesContainer {
 
 	private static TwitchEmotesContainer singleton = null;
-	private Origins origin = Origins.TWITCHTV;
+	private Origin origin = Origin.TWITCHTV;
 	private Map<String, String> map;
 
 	private TwitchEmotesContainer(int capacity) {
@@ -36,7 +36,7 @@ public class TwitchEmotesContainer implements EmotesContainer {
 	}
 
 	@Override
-	public Origins getOrigin() {
+	public Origin getOrigin() {
 		return origin;
 	}
 

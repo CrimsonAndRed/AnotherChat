@@ -1,11 +1,11 @@
-package model.messages;
+package model;
 
-public enum Origins {
+public enum Origin {
 	TWITCHTV("Twitch"), PEKA2TV("Peka");
 
 	private String name;
 
-	Origins(String name) {
+	Origin(String name) {
 		this.name = name;
 	}
 

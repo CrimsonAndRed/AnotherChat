@@ -1,9 +1,6 @@
-import model.ChannelsPool;
+import model.core.console.ConsoleCore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import util.ConsoleWriter;
-
-import java.io.IOException;
 
 public class Main {
 	private static final Logger logger = LogManager.getLogger();
@@ -14,25 +11,16 @@ public class Main {
 	//TODO exception management
 	/*
 		To run this:
-		1. Rename "settingsStub.json" to "settings.json"
-		2. Add your info
+		You cannot run it unless you know client secret
 	 */
 	public static void main(String[] args)  {
 		logger.info("Starting app!");
-
-		Thread inp = new Thread(new ConsoleWriter());
-		inp.start();
+		Thread core = new Thread(new ConsoleCore());
+		core.start();
 
 		try {
-			inp.join();
+			core.join();
 		} catch (InterruptedException e) {
-			logger.error(e);
-		}
-		logger.info("Shutting down");
-		try {
-			ChannelsPool.clear();
-			logger.info("All channels terminated");
-		} catch (IOException e) {
 			logger.error(e);
 		}
 	}
